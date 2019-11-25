@@ -5,12 +5,14 @@ require('dotenv/config');
 
 const usersRoute = require('./routes/users');
 const clubsRoute = require('./routes/clubs');
+const eventsRoute = require('./routes/events');
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/clubs', clubsRoute);
 app.use('/users', usersRoute);
+app.use('/clubs', clubsRoute);
+app.use('/events', eventsRoute);
 
 mongoose.connect(
   process.env.DB_CONNECTION_URL,
