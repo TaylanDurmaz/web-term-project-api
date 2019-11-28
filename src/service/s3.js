@@ -20,6 +20,11 @@ const uploadImage = async (file) => {
   };
 
   const s3Data = await s3.upload(s3Pparams).promise();
+
+  fs.unlink(`../../uploads/${file.path}`, (err) => {
+    if (err) throw err;
+  });
+
   return s3Data.Location;
 };
 
