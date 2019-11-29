@@ -9,15 +9,19 @@ const usersRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
 const clubsRoute = require('./routes/clubs');
 const eventsRoute = require('./routes/events');
+const topicsRoute = require('./routes/topics');
+const commentsRoute = require('./routes/comments');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/login', loginRoute);
-app.use('/users', auth, usersRoute);
+app.use('/users', usersRoute);
 app.use('/clubs', clubsRoute);
-app.use('/events', auth, eventsRoute);
+app.use('/events', eventsRoute);
+app.use('/topics', auth, topicsRoute);
+app.use('/comments', auth, commentsRoute);
 
 mongoose.connect(
   process.env.DB_CONNECTION_URL,
