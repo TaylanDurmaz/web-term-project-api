@@ -17,9 +17,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/login', loginRoute);
-app.use('/users', usersRoute);
-app.use('/clubs', clubsRoute);
-app.use('/events', eventsRoute);
+app.use('/users', auth, usersRoute);
+app.use('/clubs', auth, clubsRoute);
+app.use('/events', auth, eventsRoute);
 app.use('/topics', auth, topicsRoute);
 app.use('/comments', auth, commentsRoute);
 

@@ -17,6 +17,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/hot', async (req, res) => {
+  try {
+    const topics = await Topic.find().sort('-commentCount').limit(3).populate('owner');
+    res.status(200).json({
+      status: 'ok',
+      count: topics.length,
+      data: topics,
+    });
+  } catch (err) {
+    res.status(500).json({ status: 'error', error: err.message });
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const topic = new Topic({

@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const user = new User({
-      role: 2,
+      role: 0,
       email: req.body.email,
       password: req.body.password,
       name: req.body.name,
