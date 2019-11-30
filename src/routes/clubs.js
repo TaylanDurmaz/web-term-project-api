@@ -1,8 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const fs = require('fs');
 const uploadImage = require('../service/s3');
-
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -24,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 
-const cpUpload = upload.fields([{ name: 'form' }, { name: 'logo' }]);
+const cpUpload = upload.fields([{ name: 'logo' }]);
 router.post('/', cpUpload, async (req, res) => {
   try {
     const logo = req.files.logo[0];
