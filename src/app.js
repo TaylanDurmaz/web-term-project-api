@@ -7,6 +7,7 @@ require('dotenv/config');
 const auth = require('./middleware/auth');
 const usersRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
+const signupRoute = require('./routes/signup');
 const clubsRoute = require('./routes/clubs');
 const eventsRoute = require('./routes/events');
 const topicsRoute = require('./routes/topics');
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/login', loginRoute);
+app.use('/signup', signupRoute);
 app.use('/users', auth, usersRoute);
 app.use('/clubs', auth, clubsRoute);
 app.use('/events', auth, eventsRoute);
@@ -26,7 +28,6 @@ app.use('/comments', auth, commentsRoute);
 mongoose.connect(
   process.env.DB_CONNECTION_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log('CONNECTED'),
 );
 
 app.listen(5000);

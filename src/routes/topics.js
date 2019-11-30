@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const Topic = require('../models/topic');
+const Comment = require('../models/comment');
 
 router.get('/', async (req, res) => {
   try {
@@ -43,6 +44,21 @@ router.post('/', async (req, res) => {
     res.status(201).json({ status: 'ok', data: populatedTopic });
   } catch (err) {
     res.status(400).json({ status: 'error', error: err.message });
+  }
+});
+
+
+router.delete('/:topicId', async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    const topic = await Topic.findById(topicId);
+    if (topic) {
+      const owner = await Comment.deleteMany({ topic: topicId });
+      await Topic.deleteOne({ _id: topicId });
+      res.status(200).json({ status: 'ok', message: 'deleted' });
+    } else { res.status(404).json({ status: 'error', error: 'Topic not found' }); }
+  } catch (err) {
+    res.status(400).json({ status: 'error', ...err });
   }
 });
 

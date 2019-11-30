@@ -7,7 +7,7 @@ const Comment = require('../models/comment');
 router.get('/:topicId', async (req, res) => {
   try {
     const { topicId } = req.params;
-    const comments = await Comment.find({ topic: topicId }).populate('owner');
+    const comments = await Comment.find({ topic: topicId }).populate('owner').select('-owner.role');
     res.status(200).json({
       status: 'ok',
       count: comments.length,
