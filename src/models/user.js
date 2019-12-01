@@ -13,11 +13,13 @@ const UserSchema = mongoose.Schema({
     lowercase: true,
     validate: (value) => {
       if (!validator.isEmail(value)) {
-        throw new Error({ error: 'Invalid Email address' });
+        throw new Error('Invalid Email address');
       }
     },
   },
-  password: { type: String, required: true, select: false },
+  password: {
+    type: String, minlength: 8, required: true, select: false,
+  },
   name: { type: String, required: true },
   surname: { type: String, required: true },
   phoneNumber: { type: String },
