@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const token = await createdUser.generateAuthToken();
     res.status(201).json({ status: 'ok', data: { createdUser, token } });
   } catch (err) {
-    res.status(400).json({ status: 'error', ...err });
+    res.status(400).json({ status: 'error', error: err.message });
   }
 });
 

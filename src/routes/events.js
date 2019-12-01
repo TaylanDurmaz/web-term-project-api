@@ -9,7 +9,7 @@ const Event = require('../models/event');
 
 router.get('/', async (req, res) => {
   try {
-    const events = await Event.find().populate('owner');
+    const events = await Event.find({ time: { $gt: new Date().toISOString() } }).populate('owner');
     res.status(200).json({
       status: 'ok',
       count: events.length,
@@ -22,14 +22,14 @@ router.get('/', async (req, res) => {
 
 router.get('/upcoming', async (req, res) => {
   try {
-    const events = await Event.find().sort('time').limit(3).populate('owner');
+    const events = await Event.find({ time: { $gt: new Date().toISOString() } }).sort('time').limit(3).populate('owner');
     res.status(200).json({
       status: 'ok',
       count: events.length,
       data: events,
     });
   } catch (err) {
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: 'error', message: err.message });
   }
 });
 
@@ -54,7 +54,7 @@ router.post('/', cpUpload, async (req, res) => {
     const populatedEvent = await Event.findById(createdEvent.id).populate('owner');
     res.status(201).json({ status: 'ok', data: populatedEvent });
   } catch (err) {
-    res.status(400).json({ status: 'error', error: err.message });
+    res.status(400).json({ status: 'error', message: err.message });
   }
 });
 
@@ -64,7 +64,7 @@ router.delete('/:eventId', async (req, res) => {
     if (deletedEvent)res.status(200).json({ status: 'ok', message: 'deleted' });
     else res.status(404).json({ status: 'error', error: 'Event not found' });
   } catch (err) {
-    res.status(400).json({ status: 'error', ...err });
+    res.status(400).json({ status: 'error', message: err.message });
   }
 });
 

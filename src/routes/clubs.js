@@ -53,7 +53,7 @@ router.post('/', cpUpload, async (req, res) => {
     const populatedClub = await Club.findById(createdClub.id).populate('owner');
     res.status(201).json({ status: 'ok', data: populatedClub });
   } catch (err) {
-    res.status(400).json({ status: 'error', error: err.message });
+    res.status(400).json({ status: 'error', message: err.message });
   }
 });
 
@@ -69,7 +69,7 @@ router.delete('/:clubId', async (req, res) => {
       await Club.deleteOne({ _id: req.params.clubId });
 
       res.status(200).json({ status: 'ok', message: 'deleted' });
-    } else { res.status(404).json({ status: 'error', error: 'Club not found' }); }
+    } else { res.status(404).json({ status: 'error', message: 'Club not found' }); }
   } catch (err) {
     res.status(400).json({ status: 'error', ...err });
   }
